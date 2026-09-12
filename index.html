@@ -23,36 +23,46 @@
 			padding-top: 20px;
 		}
 
-		/* <summary>章選択ラジオボタン</summary> */
+		/* <summary>章選択ラジオボタン（3×3 グリッド）</summary> */
 		#章選択コンテナ {
 			margin-bottom: 20px;
 			background-color: rgba(255,255,255,0.7);
 			padding: 10px 20px;
 			border-radius: 8px;
-			display: flex;
-			gap: 10px;
-			align-items: center;
+			display: grid;
+			grid-template-columns: repeat(3, auto);
+			gap: 10px 20px;
 		}
 
 		.章ラベル {
 			display: flex;
 			align-items: center;
 			gap: 4px;
-			font-size: 16px;
+			font-size: 18px;
 		}
 
-		/* <summary>円図SVG（白塗りつぶし削除）</summary> */
+		/* <summary>円図SVG（透明）</summary> */
 		#円図 {
 			width: 700px;
 			height: 700px;
-			/* 背景完全透明 */
 			background-color: transparent;
-			/* 枠線なし */
 			border: none;
 		}
 
+		/* <summary>恒星・惑星・地球のフォント拡大用 class</summary> */
+		.恒星記号 {
+			font-size: 48px;
+		}
+
+		.惑星記号 {
+			font-size: 48px;
+		}
+
+		.地球記号 {
+			font-size: 48px;
+		}
+
 		text {
-			font-size: 16px;
 			text-anchor: middle;
 			dominant-baseline: middle;
 			cursor: pointer;
@@ -72,6 +82,30 @@
 			opacity: 0.3;
 			fill: none;
 		}
+
+		/* <summary>情報テーブルコンテナ（スマホ用クリック表示）</summary> */
+		#情報テーブルコンテナ {
+			width: 90%;
+			margin-top: 30px;
+			padding: 20px;
+			background-image: url("34-024.png");
+			background-size: cover;
+			background-repeat: no-repeat;
+			border-radius: 12px;
+			min-height: 200px;
+		}
+
+		#情報テーブル {
+			width: 100%;
+			background-color: rgba(255,255,255,0.85);
+			border-collapse: collapse;
+			font-size: 18px;
+		}
+
+			#情報テーブル td {
+				border-bottom: 1px solid #ccc;
+				padding: 8px;
+			}
 	</style>
 </head>
 
@@ -80,13 +114,14 @@
 
 		<!-- 章選択ラジオボタン -->
 		<div id="章選択コンテナ">
-			<span>章：</span>
 			<label class="章ラベル"><input type="radio" name="章選択" value="1" checked />第1章</label>
 			<label class="章ラベル"><input type="radio" name="章選択" value="2" />第2章</label>
 			<label class="章ラベル"><input type="radio" name="章選択" value="3" />第3章</label>
+
 			<label class="章ラベル"><input type="radio" name="章選択" value="4" />第4章</label>
 			<label class="章ラベル"><input type="radio" name="章選択" value="5" />第5章</label>
 			<label class="章ラベル"><input type="radio" name="章選択" value="6" />第6章</label>
+
 			<label class="章ラベル"><input type="radio" name="章選択" value="7" />第7章</label>
 			<label class="章ラベル"><input type="radio" name="章選択" value="8" />第8章</label>
 			<label class="章ラベル"><input type="radio" name="章選択" value="9" />第9章</label>
@@ -94,6 +129,9 @@
 
 		<!-- 円図SVG -->
 		<svg id="円図"></svg>
+
+		<!-- 情報テーブル（スマホ用クリック表示） -->
+		<div id="情報テーブルコンテナ"></div>
 
 	</div>
 

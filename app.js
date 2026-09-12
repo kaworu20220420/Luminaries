@@ -18,9 +18,7 @@ const LuminariesApplication = (() => {
 				const 結果一覧 = [];
 
 				for (const 行 of 行一覧) {
-					if (行.trim() == "") {
-						continue;
-					}
+					if (行.trim() == "") continue;
 
 					const 列 = 行.split("\t");
 					if (列.length < 4) {
@@ -37,12 +35,12 @@ const LuminariesApplication = (() => {
 					const 種類 = データ読込管理.種類判定(記号);
 
 					結果一覧.push({
-						種類: 種類,
-						記号: 記号,
-						名前: 名前,
-						職業または影響: 職業または影響,
-						星座または惑星名: 星座または惑星名,
-						章位置: 章位置,
+						種類,
+						記号,
+						名前,
+						職業または影響,
+						星座または惑星名,
+						章位置,
 						詳細データ: ""
 					});
 				}
@@ -64,8 +62,48 @@ const LuminariesApplication = (() => {
 			if (恒星記号一覧.includes(記号)) return "恒星";
 			if (惑星記号一覧.includes(記号)) return "惑星";
 			if (地球記号一覧.includes(記号)) return "地球";
-
 			return "不明";
+		}
+	}
+
+	// ============================================================
+	// class 情報表示管理（スマホ用クリック表示）
+	// ============================================================
+	class 情報表示管理 {
+
+		// <summary>クリックされた人物の情報をテーブル表示する</summary>
+		static 表示する(項目) {
+			try {
+				const コンテナ = document.getElementById("情報テーブルコンテナ");
+				if (コンテナ == null) return;
+
+				const テーブル = document.createElement("table");
+				テーブル.id = "情報テーブル";
+
+				const 行生成 = (名称, 値) => {
+					const tr = document.createElement("tr");
+					const td1 = document.createElement("td");
+					const td2 = document.createElement("td");
+					td1.textContent = 名称;
+					td2.textContent = 値;
+					tr.appendChild(td1);
+					tr.appendChild(td2);
+					return tr;
+				};
+
+				テーブル.appendChild(行生成("記号", 項目.記号));
+				テーブル.appendChild(行生成("名前", 項目.名前));
+				テーブル.appendChild(行生成("職業または影響", 項目.職業または影響));
+				テーブル.appendChild(行生成("星座または惑星名", 項目.星座または惑星名));
+				テーブル.appendChild(行生成("章位置", 項目.章位置 || "未入力"));
+				テーブル.appendChild(行生成("詳細データ", 項目.詳細データ || "未入力"));
+
+				コンテナ.innerHTML = "";
+				コンテナ.appendChild(テーブル);
+
+			} catch (例外) {
+				console.error("情報表示例外: ", 例外);
+			}
 		}
 	}
 
@@ -75,7 +113,7 @@ const LuminariesApplication = (() => {
 	class 円描画管理 {
 
 		// <summary>SVGにtitle要素を追加する</summary>
-		static タイトル追加(svg要素, 親要素, 内容) {
+		static タイトル追加(親要素, 内容) {
 			try {
 				const タイトル要素 = document.createElementNS("http://www.w3.org/2000/svg", "title");
 				タイトル要素.textContent = 内容;
@@ -88,22 +126,18 @@ const LuminariesApplication = (() => {
 		// <summary>SVGに円と人物を描画する</summary>
 		static 描画する(人物一覧, 選択章) {
 			try {
-				if (人物一覧 == null || 人物一覧.length == 0) {
-					console.error("人物一覧が空です");
-					return;
-				}
+				if (!人物一覧 || 人物一覧.length == 0) return;
 
 				const svg要素 = document.getElementById("円図");
-				if (svg要素 == null) {
-					console.error("SVG要素が存在しません");
-					return;
-				}
+				if (!svg要素) return;
 
 				svg要素.innerHTML = "";
 
 				const 中心X = 350;
 				const 中心Y = 350;
 				const 半径 = 250;
+
+				const 回転角度 = Math.PI / 24; // 7.5度
 
 				// ============================================================
 				// 円周線
@@ -116,12 +150,12 @@ const LuminariesApplication = (() => {
 				svg要素.appendChild(円周線);
 
 				// ============================================================
-				// パイ線（12分割）→ 15度ずらす（π/12）
+				// パイ線（12分割）→ 15度ずらす + 7.5度回転
 				// ============================================================
 				const ずらし角度 = Math.PI / 12; // 15度
 
 				for (let i = 0; i < 12; i++) {
-					const 角度 = (i / 12) * Math.PI * 2 + ずらし角度;
+					const 角度 = (i / 12) * Math.PI * 2 + ずらし角度 + 回転角度;
 					const 終点X = 中心X + Math.cos(角度) * 半径;
 					const 終点Y = 中心Y + Math.sin(角度) * 半径;
 
@@ -140,7 +174,8 @@ const LuminariesApplication = (() => {
 				const 恒星一覧 = 人物一覧.filter(x => x.種類 == "恒星");
 
 				恒星一覧.forEach((項目, index) => {
-					const 角度 = (index / 恒星一覧.length) * Math.PI * 2;
+
+					const 角度 = (index / 12) * Math.PI * 2 + 回転角度;
 
 					const 外側X = 中心X + Math.cos(角度) * (半径 + 40);
 					const 外側Y = 中心Y + Math.sin(角度) * (半径 + 40);
@@ -153,29 +188,36 @@ const LuminariesApplication = (() => {
 					記号要素.setAttribute("x", 外側X);
 					記号要素.setAttribute("y", 外側Y);
 					記号要素.textContent = 項目.記号;
+					記号要素.setAttribute("class", "恒星記号");
 
-					円描画管理.タイトル追加(svg要素, 記号要素,
+					円描画管理.タイトル追加(記号要素,
 						"星座: " + 項目.星座または惑星名 + "\n" +
 						"ハウス: 未入力\n" +
 						"詳細: " + (項目.詳細データ || "未入力")
 					);
 
+					記号要素.addEventListener("click", () => 情報表示管理.表示する(項目));
+
 					svg要素.appendChild(記号要素);
 
-					// 名前（内側）
+					// 名前（円周に沿わせて回転）
 					const 名前要素 = document.createElementNS("http://www.w3.org/2000/svg", "text");
 					名前要素.setAttribute("x", 内側X);
 					名前要素.setAttribute("y", 内側Y);
 
 					const 名前分割 = 項目.名前.split("・");
 					const 名字 = 名前分割[名前分割.length - 1];
-
 					名前要素.textContent = 名字;
 
-					円描画管理.タイトル追加(svg要素, 名前要素,
+					const 回転度数 = (角度 * 180 / Math.PI) + 90;
+					名前要素.setAttribute("transform", `rotate(${回転度数} ${内側X} ${内側Y})`);
+
+					円描画管理.タイトル追加(名前要素,
 						"名前: " + 項目.名前 + "\n" +
 						"職業: " + 項目.職業または影響
 					);
+
+					名前要素.addEventListener("click", () => 情報表示管理.表示する(項目));
 
 					svg要素.appendChild(名前要素);
 				});
@@ -187,28 +229,20 @@ const LuminariesApplication = (() => {
 
 				惑星一覧.forEach((項目) => {
 
-					if (項目.章位置 == null || 項目.章位置.trim() == "") {
-						return;
-					}
+					if (!項目.章位置) return;
 
 					const 章位置一覧 = 項目.章位置.split(",");
-
 					const 対象章位置 = 章位置一覧.find(x => x.startsWith(選択章));
-
-					if (対象章位置 == null) {
-						return;
-					}
+					if (!対象章位置) return;
 
 					const 星座記号 = 対象章位置.replace(/[0-9]/g, "");
 
 					const 星座一覧 = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"];
 					const 星座インデックス = 星座一覧.indexOf(星座記号);
+					if (星座インデックス == -1) return;
 
-					if (星座インデックス == -1) {
-						return;
-					}
+					const 角度 = (星座インデックス / 12) * Math.PI * 2 + 回転角度;
 
-					const 角度 = (星座インデックス / 12) * Math.PI * 2;
 					const 惑星X = 中心X + Math.cos(角度) * (半径 * 0.5);
 					const 惑星Y = 中心Y + Math.sin(角度) * (半径 * 0.5);
 
@@ -216,13 +250,16 @@ const LuminariesApplication = (() => {
 					惑星要素.setAttribute("x", 惑星X);
 					惑星要素.setAttribute("y", 惑星Y);
 					惑星要素.textContent = 項目.記号;
+					惑星要素.setAttribute("class", "惑星記号");
 
-					円描画管理.タイトル追加(svg要素, 惑星要素,
+					円描画管理.タイトル追加(惑星要素,
 						"名前: " + 項目.名前 + "\n" +
 						"影響: " + 項目.職業または影響 + "\n" +
 						"章位置: " + 項目.章位置 + "\n" +
 						"詳細: " + (項目.詳細データ || "未入力")
 					);
+
+					惑星要素.addEventListener("click", () => 情報表示管理.表示する(項目));
 
 					svg要素.appendChild(惑星要素);
 				});
@@ -233,16 +270,20 @@ const LuminariesApplication = (() => {
 				const 地球一覧 = 人物一覧.filter(x => x.種類 == "地球");
 				if (地球一覧.length > 0) {
 					const 項目 = 地球一覧[0];
+
 					const 地球要素 = document.createElementNS("http://www.w3.org/2000/svg", "text");
 					地球要素.setAttribute("x", 中心X);
 					地球要素.setAttribute("y", 中心Y);
 					地球要素.textContent = 項目.記号;
+					地球要素.setAttribute("class", "地球記号");
 
-					円描画管理.タイトル追加(svg要素, 地球要素,
+					円描画管理.タイトル追加(地球要素,
 						"名前: " + 項目.名前 + "\n" +
 						"影響: " + 項目.職業または影響 + "\n" +
 						"詳細: " + (項目.詳細データ || "未入力")
 					);
+
+					地球要素.addEventListener("click", () => 情報表示管理.表示する(項目));
 
 					svg要素.appendChild(地球要素);
 				}
@@ -270,9 +311,7 @@ const LuminariesApplication = (() => {
 						起動管理.人物一覧 = 人物一覧;
 						円描画管理.描画する(人物一覧, 起動管理.現在章);
 					})
-					.catch(例外 => {
-						console.error("fetch例外: ", 例外);
-					});
+					.catch(例外 => console.error("fetch例外: ", 例外));
 
 			} catch (例外) {
 				console.error("初期化例外: ", 例外);
@@ -292,7 +331,7 @@ const LuminariesApplication = (() => {
 	}
 
 	return {
-		起動管理: 起動管理
+		起動管理
 	};
 
 })();
