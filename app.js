@@ -79,8 +79,7 @@ const LuminariesApplication = (() => {
 			try {
 				const タイトル要素 = document.createElementNS("http://www.w3.org/2000/svg", "title");
 				タイトル要素.textContent = 内容;
-				parent = 親要素;
-				parent.appendChild(タイトル要素);
+				親要素.appendChild(タイトル要素);
 			} catch (例外) {
 				console.error("タイトル追加例外: ", 例外);
 			}
@@ -117,10 +116,12 @@ const LuminariesApplication = (() => {
 				svg要素.appendChild(円周線);
 
 				// ============================================================
-				// パイ線（12分割）
+				// パイ線（12分割）→ 15度ずらす（π/12）
 				// ============================================================
+				const ずらし角度 = Math.PI / 12; // 15度
+
 				for (let i = 0; i < 12; i++) {
-					const 角度 = (i / 12) * Math.PI * 2;
+					const 角度 = (i / 12) * Math.PI * 2 + ずらし角度;
 					const 終点X = 中心X + Math.cos(角度) * 半径;
 					const 終点Y = 中心Y + Math.sin(角度) * 半径;
 

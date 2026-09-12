@@ -41,12 +41,14 @@
 			font-size: 16px;
 		}
 
-		/* <summary>円図SVG</summary> */
+		/* <summary>円図SVG（白塗りつぶし削除）</summary> */
 		#円図 {
 			width: 700px;
 			height: 700px;
-			background-color: rgba(255,255,255,0.6);
-			/* 周囲の枠線はいらない */
+			/* 背景完全透明 */
+			background-color: transparent;
+			/* 枠線なし */
+			border: none;
 		}
 
 		text {
@@ -79,42 +81,15 @@
 		<!-- 章選択ラジオボタン -->
 		<div id="章選択コンテナ">
 			<span>章：</span>
-			<label class="章ラベル">
-				<input type="radio" name="章選択" value="1" checked />
-				第1章
-			</label>
-			<label class="章ラベル">
-				<input type="radio" name="章選択" value="2" />
-				第2章
-			</label>
-			<label class="章ラベル">
-				<input type="radio" name="章選択" value="3" />
-				第3章
-			</label>
-			<label class="章ラベル">
-				<input type="radio" name="章選択" value="4" />
-				第4章
-			</label>
-			<label class="章ラベル">
-				<input type="radio" name="章選択" value="5" />
-				第5章
-			</label>
-			<label class="章ラベル">
-				<input type="radio" name="章選択" value="6" />
-				第6章
-			</label>
-			<label class="章ラベル">
-				<input type="radio" name="章選択" value="7" />
-				第7章
-			</label>
-			<label class="章ラベル">
-				<input type="radio" name="章選択" value="8" />
-				第8章
-			</label>
-			<label class="章ラベル">
-				<input type="radio" name="章選択" value="9" />
-				第9章
-			</label>
+			<label class="章ラベル"><input type="radio" name="章選択" value="1" checked />第1章</label>
+			<label class="章ラベル"><input type="radio" name="章選択" value="2" />第2章</label>
+			<label class="章ラベル"><input type="radio" name="章選択" value="3" />第3章</label>
+			<label class="章ラベル"><input type="radio" name="章選択" value="4" />第4章</label>
+			<label class="章ラベル"><input type="radio" name="章選択" value="5" />第5章</label>
+			<label class="章ラベル"><input type="radio" name="章選択" value="6" />第6章</label>
+			<label class="章ラベル"><input type="radio" name="章選択" value="7" />第7章</label>
+			<label class="章ラベル"><input type="radio" name="章選択" value="8" />第8章</label>
+			<label class="章ラベル"><input type="radio" name="章選択" value="9" />第9章</label>
 		</div>
 
 		<!-- 円図SVG -->
@@ -134,10 +109,8 @@
 					return;
 				}
 
-				// 初期描画
 				LuminariesApplication.起動管理.初期化する();
 
-				// 章選択ラジオボタンイベント
 				const ラジオ一覧 = document.querySelectorAll("input[name='章選択']");
 				ラジオ一覧.forEach(ラジオ => {
 					ラジオ.addEventListener("change", () => {
