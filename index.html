@@ -23,17 +23,22 @@
 			padding-top: 20px;
 		}
 
-		/* <summary>章選択UI</summary> */
+		/* <summary>章選択ラジオボタン</summary> */
 		#章選択コンテナ {
 			margin-bottom: 20px;
 			background-color: rgba(255,255,255,0.7);
 			padding: 10px 20px;
 			border-radius: 8px;
+			display: flex;
+			gap: 10px;
+			align-items: center;
 		}
 
-		#章選択 {
-			font-size: 18px;
-			padding: 5px 10px;
+		.章ラベル {
+			display: flex;
+			align-items: center;
+			gap: 4px;
+			font-size: 16px;
 		}
 
 		/* <summary>円図SVG</summary> */
@@ -41,7 +46,7 @@
 			width: 700px;
 			height: 700px;
 			background-color: rgba(255,255,255,0.6);
-			border: 1px solid #ccc;
+			/* 周囲の枠線はいらない */
 		}
 
 		text {
@@ -71,20 +76,45 @@
 <body>
 	<div id="全体コンテナ">
 
-		<!-- 章選択UI -->
+		<!-- 章選択ラジオボタン -->
 		<div id="章選択コンテナ">
-			<label for="章選択">章：</label>
-			<select id="章選択">
-				<option value="1">第1章</option>
-				<option value="2">第2章</option>
-				<option value="3">第3章</option>
-				<option value="4">第4章</option>
-				<option value="5">第5章</option>
-				<option value="6">第6章</option>
-				<option value="7">第7章</option>
-				<option value="8">第8章</option>
-				<option value="9">第9章</option>
-			</select>
+			<span>章：</span>
+			<label class="章ラベル">
+				<input type="radio" name="章選択" value="1" checked />
+				第1章
+			</label>
+			<label class="章ラベル">
+				<input type="radio" name="章選択" value="2" />
+				第2章
+			</label>
+			<label class="章ラベル">
+				<input type="radio" name="章選択" value="3" />
+				第3章
+			</label>
+			<label class="章ラベル">
+				<input type="radio" name="章選択" value="4" />
+				第4章
+			</label>
+			<label class="章ラベル">
+				<input type="radio" name="章選択" value="5" />
+				第5章
+			</label>
+			<label class="章ラベル">
+				<input type="radio" name="章選択" value="6" />
+				第6章
+			</label>
+			<label class="章ラベル">
+				<input type="radio" name="章選択" value="7" />
+				第7章
+			</label>
+			<label class="章ラベル">
+				<input type="radio" name="章選択" value="8" />
+				第8章
+			</label>
+			<label class="章ラベル">
+				<input type="radio" name="章選択" value="9" />
+				第9章
+			</label>
 		</div>
 
 		<!-- 円図SVG -->
@@ -107,10 +137,14 @@
 				// 初期描画
 				LuminariesApplication.起動管理.初期化する();
 
-				// 章選択イベント
-				const 章選択 = document.getElementById("章選択");
-				章選択.addEventListener("change", () => {
-					LuminariesApplication.起動管理.章変更する(章選択.value);
+				// 章選択ラジオボタンイベント
+				const ラジオ一覧 = document.querySelectorAll("input[name='章選択']");
+				ラジオ一覧.forEach(ラジオ => {
+					ラジオ.addEventListener("change", () => {
+						if (ラジオ.checked) {
+							LuminariesApplication.起動管理.章変更する(ラジオ.value);
+						}
+					});
 				});
 
 			} catch (例外) {

@@ -43,7 +43,7 @@ const LuminariesApplication = (() => {
 						職業または影響: 職業または影響,
 						星座または惑星名: 星座または惑星名,
 						章位置: 章位置,
-						詳細データ: "" // 追記予定
+						詳細データ: ""
 					});
 				}
 
@@ -74,6 +74,18 @@ const LuminariesApplication = (() => {
 	// ============================================================
 	class 円描画管理 {
 
+		// <summary>SVGにtitle要素を追加する</summary>
+		static タイトル追加(svg要素, 親要素, 内容) {
+			try {
+				const タイトル要素 = document.createElementNS("http://www.w3.org/2000/svg", "title");
+				タイトル要素.textContent = 内容;
+				parent = 親要素;
+				parent.appendChild(タイトル要素);
+			} catch (例外) {
+				console.error("タイトル追加例外: ", 例外);
+			}
+		}
+
 		// <summary>SVGに円と人物を描画する</summary>
 		static 描画する(人物一覧, 選択章) {
 			try {
@@ -95,7 +107,7 @@ const LuminariesApplication = (() => {
 				const 半径 = 250;
 
 				// ============================================================
-				// 円周線（opacity 30）
+				// 円周線
 				// ============================================================
 				const 円周線 = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 				円周線.setAttribute("cx", 中心X);
@@ -125,6 +137,7 @@ const LuminariesApplication = (() => {
 				// 恒星（円周）
 				// ============================================================
 				const 恒星一覧 = 人物一覧.filter(x => x.種類 == "恒星");
+
 				恒星一覧.forEach((項目, index) => {
 					const 角度 = (index / 恒星一覧.length) * Math.PI * 2;
 
@@ -139,11 +152,13 @@ const LuminariesApplication = (() => {
 					記号要素.setAttribute("x", 外側X);
 					記号要素.setAttribute("y", 外側Y);
 					記号要素.textContent = 項目.記号;
-					記号要素.setAttribute("title",
+
+					円描画管理.タイトル追加(svg要素, 記号要素,
 						"星座: " + 項目.星座または惑星名 + "\n" +
 						"ハウス: 未入力\n" +
 						"詳細: " + (項目.詳細データ || "未入力")
 					);
+
 					svg要素.appendChild(記号要素);
 
 					// 名前（内側）
@@ -155,10 +170,12 @@ const LuminariesApplication = (() => {
 					const 名字 = 名前分割[名前分割.length - 1];
 
 					名前要素.textContent = 名字;
-					名前要素.setAttribute("title",
+
+					円描画管理.タイトル追加(svg要素, 名前要素,
 						"名前: " + 項目.名前 + "\n" +
 						"職業: " + 項目.職業または影響
 					);
+
 					svg要素.appendChild(名前要素);
 				});
 
@@ -169,31 +186,18 @@ const LuminariesApplication = (() => {
 
 				惑星一覧.forEach((項目) => {
 
-					// 章位置がない場合 → 表示しない
 					if (項目.章位置 == null || 項目.章位置.trim() == "") {
 						return;
 					}
 
-					// 章位置をパース
 					const 章位置一覧 = 項目.章位置.split(",");
-					const 対象章位置 = 章位置一覧.find(x => x.startsWith(選択章 + "♑") ||
-						x.startsWith(選択章 + "♒") ||
-						x.startsWith(選択章 + "♓") ||
-						x.startsWith(選択章 + "♈") ||
-						x.startsWith(選択章 + "♉") ||
-						x.startsWith(選択章 + "♊") ||
-						x.startsWith(選択章 + "♋") ||
-						x.startsWith(選択章 + "♌") ||
-						x.startsWith(選択章 + "♍") ||
-						x.startsWith(選択章 + "♎") ||
-						x.startsWith(選択章 + "♏") ||
-						x.startsWith(選択章 + "♐"));
+
+					const 対象章位置 = 章位置一覧.find(x => x.startsWith(選択章));
 
 					if (対象章位置 == null) {
 						return;
 					}
 
-					// 章位置の星座記号を抽出
 					const 星座記号 = 対象章位置.replace(/[0-9]/g, "");
 
 					const 星座一覧 = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"];
@@ -211,12 +215,14 @@ const LuminariesApplication = (() => {
 					惑星要素.setAttribute("x", 惑星X);
 					惑星要素.setAttribute("y", 惑星Y);
 					惑星要素.textContent = 項目.記号;
-					惑星要素.setAttribute("title",
+
+					円描画管理.タイトル追加(svg要素, 惑星要素,
 						"名前: " + 項目.名前 + "\n" +
 						"影響: " + 項目.職業または影響 + "\n" +
 						"章位置: " + 項目.章位置 + "\n" +
 						"詳細: " + (項目.詳細データ || "未入力")
 					);
+
 					svg要素.appendChild(惑星要素);
 				});
 
@@ -230,11 +236,13 @@ const LuminariesApplication = (() => {
 					地球要素.setAttribute("x", 中心X);
 					地球要素.setAttribute("y", 中心Y);
 					地球要素.textContent = 項目.記号;
-					地球要素.setAttribute("title",
+
+					円描画管理.タイトル追加(svg要素, 地球要素,
 						"名前: " + 項目.名前 + "\n" +
 						"影響: " + 項目.職業または影響 + "\n" +
 						"詳細: " + (項目.詳細データ || "未入力")
 					);
+
 					svg要素.appendChild(地球要素);
 				}
 
@@ -271,7 +279,7 @@ const LuminariesApplication = (() => {
 		}
 
 		// <summary>章変更時に再描画する</summary>
-		static章変更する(章) {
+		static 章変更する(章) {
 			try {
 				起動管理.現在章 = 章;
 				円描画管理.描画する(起動管理.人物一覧, 章);
