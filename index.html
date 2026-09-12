@@ -3,14 +3,16 @@
 <head>
 	<meta charset="UTF-8" />
 
-	<!-- namespace LuminariesApplication の style -->
 	<style>
-		/* <summary>画面全体のレイアウトを整える</summary> */
+		/* <summary>背景に paper.png を敷く</summary> */
 		body {
 			margin: 0;
 			padding: 0;
 			font-family: "Yu Gothic", sans-serif;
-			background-color: #f5f5f5;
+			background-image: url("paper.png");
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
 		}
 
 		#全体コンテナ {
@@ -21,10 +23,24 @@
 			padding-top: 20px;
 		}
 
+		/* <summary>章選択UI</summary> */
+		#章選択コンテナ {
+			margin-bottom: 20px;
+			background-color: rgba(255,255,255,0.7);
+			padding: 10px 20px;
+			border-radius: 8px;
+		}
+
+		#章選択 {
+			font-size: 18px;
+			padding: 5px 10px;
+		}
+
+		/* <summary>円図SVG</summary> */
 		#円図 {
-			width: 600px;
-			height: 600px;
-			background-color: white;
+			width: 700px;
+			height: 700px;
+			background-color: rgba(255,255,255,0.6);
 			border: 1px solid #ccc;
 		}
 
@@ -34,13 +50,44 @@
 			dominant-baseline: middle;
 			cursor: pointer;
 		}
+
+		/* <summary>ムーディーな線の色</summary> */
+		.円周線 {
+			stroke: #444;
+			stroke-width: 2;
+			opacity: 0.3;
+			fill: none;
+		}
+
+		.パイ線 {
+			stroke: #666;
+			stroke-width: 1;
+			opacity: 0.3;
+			fill: none;
+		}
 	</style>
 </head>
 
 <body>
 	<div id="全体コンテナ">
 
-		<!-- <summary>円図SVGのコンテナ</summary> -->
+		<!-- 章選択UI -->
+		<div id="章選択コンテナ">
+			<label for="章選択">章：</label>
+			<select id="章選択">
+				<option value="1">第1章</option>
+				<option value="2">第2章</option>
+				<option value="3">第3章</option>
+				<option value="4">第4章</option>
+				<option value="5">第5章</option>
+				<option value="6">第6章</option>
+				<option value="7">第7章</option>
+				<option value="8">第8章</option>
+				<option value="9">第9章</option>
+			</select>
+		</div>
+
+		<!-- 円図SVG -->
 		<svg id="円図"></svg>
 
 	</div>
@@ -50,20 +97,26 @@
 
 	<!-- namespace LuminariesApplication 呼び出し元 -->
 	<script>
-        // <summary>初期化処理を呼び出す</summary>
-        document.addEventListener("DOMContentLoaded", () => {
-            try {
-                if (typeof LuminariesApplication == "undefined") {
-                    console.error("LuminariesApplication が未定義です");
-                    return;
-                }
+		document.addEventListener("DOMContentLoaded", () => {
+			try {
+				if (typeof LuminariesApplication == "undefined") {
+					console.error("LuminariesApplication が未定義です");
+					return;
+				}
 
-                LuminariesApplication.起動管理.初期化する();
+				// 初期描画
+				LuminariesApplication.起動管理.初期化する();
 
-            } catch (例外) {
-                console.error("index.html 初期化例外: ", 例外);
-            }
-        });
+				// 章選択イベント
+				const 章選択 = document.getElementById("章選択");
+				章選択.addEventListener("change", () => {
+					LuminariesApplication.起動管理.章変更する(章選択.value);
+				});
+
+			} catch (例外) {
+				console.error("index.html 初期化例外: ", 例外);
+			}
+		});
 	</script>
 </body>
 </html>
