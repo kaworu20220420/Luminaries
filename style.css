@@ -1,0 +1,142 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Noto+Serif+JP:wght@400;700&display=swap');
+/* <summary>背景に paper.png を敷く</summary> */
+body {
+	margin: 0;
+	padding: 0;
+	font-family: "Noto Serif JP", serif;
+	background-image: url("paper.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+/* 全体 */
+#全体コンテナ {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 20px;
+}
+/* 左右を中央寄せするヘッダーコンテナ */
+#ヘッダーコンテナ {
+	width: 90%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center; /* ←中央寄せ */
+	align-items: flex-start;
+	gap: 40px;
+	margin-bottom: 20px;
+}
+/* 左側:タイトル・著者・訳者・表紙 */
+#左情報コンテナ {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 8px;
+}
+/* タイトルフォントを凝ったものに */
+#タイトルコンテナ a {
+	font-family: "Cinzel", serif;
+	font-size: 32px;
+	text-decoration: none;
+	color: #000;
+}
+/* 作者・訳者 */
+#作者コンテナ,
+#訳者コンテナ {
+	font-size: 18px;
+	font-family: "Noto Serif JP", serif;
+}
+
+#表紙コンテナ img {
+	margin-top: 8px;
+}
+/* 右側:目次 */
+#目次コンテナ {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+/* 章選択ラジオボタン(1列) */
+#章選択コンテナ {
+	margin-bottom: 20px;
+	background-color: rgba(255,255,255,0.7);
+	padding: 10px 20px;
+	border-radius: 8px;
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 8px 0;
+}
+
+.章ラベル {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 18px;
+}
+/* 円図SVG */
+#円図 {
+	width: 700px;
+	height: 700px;
+	background-color: transparent;
+	border: none;
+}
+/* 記号フォント拡大 */
+.恒星記号,
+.惑星記号,
+.地球記号 {
+	font-size: 96px;
+}
+
+text {
+	text-anchor: middle;
+	dominant-baseline: middle;
+	cursor: pointer;
+}
+/* 円周線 */
+.円周線 {
+	stroke: #444;
+	stroke-width: 2;
+	opacity: 0.3;
+	fill: none;
+}
+/* パイ線 */
+.パイ線 {
+	stroke: #666;
+	stroke-width: 1;
+	opacity: 0.3;
+	fill: none;
+}
+/* 情報テーブルコンテナ */
+#情報テーブルコンテナ {
+	width: 80%; /* ←さらに80%に */
+	margin: 30px auto; /* ←中央寄せ */
+	padding: 20px;
+	background-image: url("34-024.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	border-radius: 12px;
+	min-height: 200px;
+}
+/* 情報テーブル */
+#情報テーブル {
+	width: 80%; /* ←さらに80%に */
+	margin: 0 auto; /* ←中央寄せ */
+	background-color: transparent;
+	border-collapse: collapse;
+	font-size: 18px;
+}
+	/* 情報テーブルのセル */
+	#情報テーブル td {
+		border-bottom: 1px solid #ccc;
+		padding: 8px;
+	}
+		/* 項目名(左側セル) */
+		#情報テーブル th,
+		#情報テーブル td:first-child {
+			text-align: right;
+			font-family: "Yu Gothic", sans-serif;
+			color: #4b0082; /* 深みのある紫 */
+			font-weight: bold;
+		}

@@ -3,182 +3,41 @@
 <head>
 	<meta charset="UTF-8" />
 
-	<style>
-		/* <summary>背景に paper.png を敷く</summary> */
-		body {
-			margin: 0;
-			padding: 0;
-			font-family: "Yu Gothic", sans-serif;
-			background-image: url("paper.png");
-			background-size: cover;
-			background-repeat: no-repeat;
-			background-attachment: fixed;
-		}
-
-		#全体コンテナ {
-			width: 100%;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			padding-top: 20px;
-		}
-
-		/* <summary>左にタイトル群、右に目次を並べるコンテナ</summary> */
-		#ヘッダーコンテナ {
-			width: 90%;
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-			align-items: flex-start;
-			gap: 40px;
-			margin-bottom: 20px;
-		}
-
-		/* <summary>タイトル・作者・訳者・表紙を縦に並べる</summary> */
-		#左情報コンテナ {
-			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
-			gap: 8px;
-		}
-
-		#タイトルコンテナ a {
-			font-size: 24px;
-			text-decoration: none;
-			color: #000;
-		}
-
-		#作者コンテナ,
-		#訳者コンテナ {
-			font-size: 18px;
-		}
-
-		#表紙コンテナ img {
-			margin-top: 8px;
-		}
-
-		/* <summary>目次全体コンテナ（右側）</summary> */
-		#目次コンテナ {
-			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
-		}
-
-		/* <summary>章選択ラジオボタン（1列グリッド）</summary> */
-		#章選択コンテナ {
-			margin-bottom: 20px;
-			background-color: rgba(255,255,255,0.7);
-			padding: 10px 20px;
-			border-radius: 8px;
-			display: grid;
-			grid-template-columns: 1fr;
-			gap: 8px 0;
-		}
-
-		.章ラベル {
-			display: flex;
-			align-items: center;
-			gap: 4px;
-			font-size: 18px;
-		}
-
-		/* <summary>円図SVG（透明）</summary> */
-		#円図 {
-			width: 700px;
-			height: 700px;
-			background-color: transparent;
-			border: none;
-		}
-
-		/* <summary>恒星・惑星・地球のフォント拡大用 class（6倍）</summary> */
-		.恒星記号 {
-			font-size: 96px;
-		}
-
-		.惑星記号 {
-			font-size: 96px;
-		}
-
-		.地球記号 {
-			font-size: 96px;
-		}
-
-		text {
-			text-anchor: middle;
-			dominant-baseline: middle;
-			cursor: pointer;
-		}
-
-		/* <summary>ムーディーな線の色</summary> */
-		.円周線 {
-			stroke: #444;
-			stroke-width: 2;
-			opacity: 0.3;
-			fill: none;
-		}
-
-		.パイ線 {
-			stroke: #666;
-			stroke-width: 1;
-			opacity: 0.3;
-			fill: none;
-		}
-
-		/* <summary>情報テーブルコンテナ（スマホ用クリック表示）</summary> */
-		#情報テーブルコンテナ {
-			width: 80%;
-			margin-top: 30px;
-			padding: 20px;
-			background-image: url("34-024.png");
-			background-size: cover;
-			background-repeat: no-repeat;
-			border-radius: 12px;
-			min-height: 200px;
-		}
-
-		#情報テーブル {
-			width: 90%;
-			background-color: transparent;
-			border-collapse: collapse;
-			font-size: 18px;
-		}
-
-			#情報テーブル td {
-				border-bottom: 1px solid #ccc;
-				padding: 8px;
-			}
-
-				/* <summary>情報テーブルの項目名スタイル（右揃え・ゴシック・深い紫）</summary> */
-				#情報テーブル th,
-				#情報テーブル td:first-child {
-					text-align: right;
-					font-family: "Yu Gothic", sans-serif;
-					color: #4b0082;
-					font-weight: bold;
-				}
-	</style>
+	<!-- 外部CSS -->
+	<link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 	<div id="全体コンテナ">
+
+		<!-- 左右中央寄せのヘッダーコンテナ -->
 		<div id="ヘッダーコンテナ">
+
+			<!-- 左側：タイトル・作者・訳者・表紙 -->
 			<div id="左情報コンテナ">
 				<div id="タイトルコンテナ">
-					<a href="https://www.amazon.co.jp/ルミナリーズ-エレノア・キャトン/dp/4000256025?__mk_ja_JP=カタカナ&crid=1EW73ZIPG2SOW&dib=eyJ2IjoiMSJ9.HcKn8vAw1VWA2ZyZ16mxG6Kw1ZFQsaB6t1sEz_2kR5DGjHj071QN20LucGBJIEps.qvtCY8QPh_1p8vbb1-lPuOGic3RS1BwEVkLp43RaDsk&dib_tag=se&keywords=ルミナリーズ&qid=1789262118&sprefix=ルミナリーズ%2Caps%2C184&sr=8-1&linkCode=sl2&tag=futurelife004-22&linkId=06693015aec48331c2bb7eeed877885f&ref_=as_li_ss_tl&ascsubtag=srctok-67dd40fd75e0926e&btn_type=ss&btn_ref=srctok-67dd40fd75e0926e">
+					<a href="https://www.amazon.co.jp/ルミナリーズ-エレノア・キャトン/dp/4000256025">
 						THE LUNINARIES<br />ルミナリーズ
 					</a>
 				</div>
-				<div id="作者コンテナ">Eleanor Catton<br />エレノア・キャトン</div>
-				<div id="訳者コンテナ">安達まみ</div>
+
+				<div id="作者コンテナ">
+					Eleanor Catton<br />エレノア・キャトン
+				</div>
+
+				<div id="訳者コンテナ">
+					安達まみ
+				</div>
+
 				<div id="表紙コンテナ">
-					<a href="https://www.amazon.co.jp/ルミナリーズ-エレノア・キャトン/dp/4000256025?__mk_ja_JP=カタカナ&crid=1EW73ZIPG2SOW&dib=eyJ2IjoiMSJ9.HcKn8vAw1VWA2ZyZ16mxG6Kw1ZFQsaB6t1sEz_2kR5DGjHj071QN20LucGBJIEps.qvtCY8QPh_1p8vbb1-lPuOGic3RS1BwEVkLp43RaDsk&dib_tag=se&keywords=ルミナリーズ&qid=1789262118&sprefix=ルミナリーズ%2Caps%2C184&sr=8-1&linkCode=sl2&tag=futurelife004-22&linkId=06693015aec48331c2bb7eeed877885f&ref_=as_li_ss_tl&ascsubtag=srctok-67dd40fd75e0926e&btn_type=ss&btn_ref=srctok-67dd40fd75e0926e">
+					<a href="https://www.amazon.co.jp/ルミナリーズ-エレノア・キャトン/dp/4000256025">
 						<img src="Cover.jpg" alt="表紙" width="300">
 					</a>
 				</div>
 			</div>
 
+			<!-- 右側：目次（章選択） -->
 			<div id="目次コンテナ">
-				<!-- 章選択ラジオボタン（1列） -->
 				<div id="章選択コンテナ">
 					<label class="章ラベル"><input type="radio" name="章選択" value="1" checked />第1部 天球の中の天球</label>
 					<label class="章ラベル"><input type="radio" name="章選択" value="2" />第2部 兆し</label>
@@ -197,12 +56,13 @@
 					<label class="章ラベル"><input type="radio" name="章選択" value="12" />第12部 老いた月が若き月の腕に抱かれて</label>
 				</div>
 			</div>
+
 		</div>
 
 		<!-- 円図SVG -->
 		<svg id="円図"></svg>
 
-		<!-- 情報テーブル（スマホ用クリック表示） -->
+		<!-- 情報テーブル -->
 		<div id="情報テーブルコンテナ"></div>
 
 	</div>
