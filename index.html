@@ -2,24 +2,24 @@
 <html lang="ja">
 <head>
 	<meta charset="UTF-8" />
-
-	<!-- 外部CSS -->
 	<link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 	<div id="全体コンテナ">
 
-		<!-- 左右中央寄せのヘッダーコンテナ -->
+		<!-- ヘッダーコンテナ（タイトル右に作者・訳者・目次） -->
 		<div id="ヘッダーコンテナ">
 
-			<!-- 左側：タイトル・作者・訳者・表紙 -->
-			<div id="左情報コンテナ">
-				<div id="タイトルコンテナ">
-					<a href="https://www.amazon.co.jp/ルミナリーズ-エレノア・キャトン/dp/4000256025">
-						THE LUNINARIES<br />ルミナリーズ
-					</a>
-				</div>
+			<!-- 左側：タイトル -->
+			<div id="タイトルコンテナ">
+				<a href="https://www.amazon.co.jp/ルミナリーズ-エレノア・キャトン/dp/4000256025?linkCode=sl2&tag=futurelife004-22&linkId=2bf142dcaed77c4a2dd36abd9d843299&ref_=as_li_ss_tl&ascsubtag=srctok-71433a185f8a6f80&btn_type=ss&btn_ref=srctok-71433a185f8a6f80">
+					THE LUNINARIES<br />ルミナリーズ
+				</a>
+			</div>
+
+			<!-- 右側：作者・訳者・目次・表紙 -->
+			<div id="右情報コンテナ">
 
 				<div id="作者コンテナ">
 					Eleanor Catton<br />エレノア・キャトン
@@ -29,15 +29,7 @@
 					安達まみ
 				</div>
 
-				<div id="表紙コンテナ">
-					<a href="https://www.amazon.co.jp/ルミナリーズ-エレノア・キャトン/dp/4000256025">
-						<img src="Cover.jpg" alt="表紙" width="300">
-					</a>
-				</div>
-			</div>
-
-			<!-- 右側：目次（章選択） -->
-			<div id="目次コンテナ">
+				<!-- 章選択（訳者のすぐ下） -->
 				<div id="章選択コンテナ">
 					<label class="章ラベル"><input type="radio" name="章選択" value="1" checked />第1部 天球の中の天球</label>
 					<label class="章ラベル"><input type="radio" name="章選択" value="2" />第2部 兆し</label>
@@ -55,6 +47,14 @@
 					<label class="章ラベル"><input type="radio" name="章選択" value="11" />第11部 オリオン座が沈み蠍座が昇る</label>
 					<label class="章ラベル"><input type="radio" name="章選択" value="12" />第12部 老いた月が若き月の腕に抱かれて</label>
 				</div>
+
+				<!-- 表紙（目次の下） -->
+				<div id="表紙コンテナ">
+					<a href="https://www.amazon.co.jp/ルミナリーズ-エレノア・キャトン/dp/4000256025?linkCode=sl2&tag=futurelife004-22&linkId=2bf142dcaed77c4a2dd36abd9d843299&ref_=as_li_ss_tl&ascsubtag=srctok-71433a185f8a6f80&btn_type=ss&btn_ref=srctok-71433a185f8a6f80">
+						<img src="Cover.jpg" alt="表紙" width="300">
+					</a>
+				</div>
+
 			</div>
 
 		</div>
@@ -73,7 +73,6 @@
 	<script src="js/view-circle.js"></script>
 	<script src="js/app.js"></script>
 
-	<!-- namespace LuminariesApplication 呼び出し元 -->
 	<script>
 		document.addEventListener("DOMContentLoaded", () => {
 			try {
