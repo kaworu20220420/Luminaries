@@ -14,22 +14,32 @@ const LuminariesApplication_ViewInfo = (() => {
 				// クリア
 				コンテナ.innerHTML = "";
 
-				// テーブル生成
-				const テーブル = document.createElement("table");
-				テーブル.id = "情報テーブル";
-
 				// ============================================================
-				// 背景記号（15倍・opacity 0.2）
+				// 背景記号（データの後ろに敷く）
 				// ============================================================
 				const 背景記号 = document.createElement("div");
 				背景記号.style.fontSize = "240px";   // 15倍相当
 				背景記号.style.opacity = "0.2";
 				背景記号.style.textAlign = "center";
 				背景記号.style.fontFamily = "Noto Serif JP";
-				背景記号.style.marginBottom = "-80px"; // データと重ねるため
+				背景記号.style.position = "absolute";
+				背景記号.style.left = "0";
+				背景記号.style.right = "0";
+				背景記号.style.top = "20px";
+				背景記号.style.pointerEvents = "none"; // クリックを邪魔しない
 				背景記号.textContent = 項目.記号;
 
+				// コンテナを相対配置にして背景を重ねられるようにする
+				コンテナ.style.position = "relative";
 				コンテナ.appendChild(背景記号);
+
+				// ============================================================
+				// テーブル生成（背景の上に重ねる）
+				// ============================================================
+				const テーブル = document.createElement("table");
+				テーブル.id = "情報テーブル";
+				テーブル.style.position = "relative"; // 背景より前面
+				テーブル.style.zIndex = "10";
 
 				// ============================================================
 				// データ行生成関数
