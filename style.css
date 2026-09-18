@@ -23,7 +23,7 @@ body {
 	width: 90%;
 	display: flex;
 	flex-direction: row;
-	justify-content: center; /* ←中央寄せ */
+	justify-content: center;
 	align-items: flex-start;
 	gap: 40px;
 	margin-bottom: 20px;
@@ -82,9 +82,15 @@ body {
 	background-color: transparent;
 	border: none;
 }
-/* 記号フォント拡大 */
-.恒星記号,
-.惑星記号,
+/* 記号フォント拡大(惑星だけ 2/3 に縮小) */
+.恒星記号 {
+	font-size: 96px;
+}
+
+.惑星記号 {
+	font-size: 64px; /* ← 96px の 2/3 に縮小 */
+}
+
 .地球記号 {
 	font-size: 96px;
 }
@@ -110,8 +116,8 @@ text {
 }
 /* 情報テーブルコンテナ */
 #情報テーブルコンテナ {
-	width: 80%; /* ←さらに80%に */
-	margin: 30px auto; /* ←中央寄せ */
+	width: 80%;
+	margin: 30px auto;
 	padding: 20px;
 	background-image: url("34-024.png");
 	background-size: cover;
@@ -121,22 +127,22 @@ text {
 }
 /* 情報テーブル */
 #情報テーブル {
-	width: 80%; /* ←さらに80%に */
-	margin: 0 auto; /* ←中央寄せ */
+	width: 80%;
+	margin: 0 auto;
 	background-color: transparent;
 	border-collapse: collapse;
 	font-size: 18px;
 }
-	/* 情報テーブルのセル */
+
 	#情報テーブル td {
 		border-bottom: 1px solid #ccc;
 		padding: 8px;
 	}
-		/* 項目名(左側セル) */
+
 		#情報テーブル th,
 		#情報テーブル td:first-child {
 			text-align: right;
 			font-family: "Yu Gothic", sans-serif;
-			color: #4b0082; /* 深みのある紫 */
+			color: #4b0082;
 			font-weight: bold;
 		}

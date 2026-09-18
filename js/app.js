@@ -119,44 +119,60 @@ const LuminariesApplication = (() => {
 				// 惑星（章ごとの位置）
 				const 惑星一覧 = 人物一覧.filter(x => x.種類 == "惑星");
 
-				惑星一覧.forEach((項目) => {
+				// レイヤー半径（外側→内側）
+				const 惑星レイヤー半径一覧 = [
+					半径 * 0.65,
+					半径 * 0.55,
+					半径 * 0.45
+				];
 
-					if (!項目.章位置) return;
+				惑星一覧.forEach((項目, index) => {
+					try {
+						if (!項目.章位置) return;
 
-					const 章位置一覧 = 項目.章位置.split(",");
-					const 対象章位置 = 章位置一覧.find(x => x.startsWith(選択章));
-					if (!対象章位置) return;
+						const 章位置一覧 = 項目.章位置.split(",");
+						const 対象章位置 = 章位置一覧.find(x => x.startsWith(選択章));
+						if (!対象章位置) return;
 
-					const 星座記号 = 対象章位置.replace(/[0-9]/g, "");
+						const 星座記号 = 対象章位置.replace(/[0-9]/g, "");
 
-					const 星座一覧 = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"];
-					const 星座インデックス = 星座一覧.indexOf(星座記号);
-					if (星座インデックス == -1) return;
+						const 星座一覧 = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"];
+						const 星座インデックス = 星座一覧.indexOf(星座記号);
+						if (星座インデックス == -1) return;
 
-					const 角度 = (星座インデックス / 12) * Math.PI * 2 + 回転角度;
+						const 角度 = (星座インデックス / 12) * Math.PI * 2 + 回転角度;
 
-					const 惑星X = 中心X + Math.cos(角度) * (半径 * 0.5);
-					const 惑星Y = 中心Y + Math.sin(角度) * (半径 * 0.5);
+						// ★ 惑星レイヤー割り当て（順番ローテーション）
+						const レイヤーインデックス = index % 3;
+						const 使用半径 = 惑星レイヤー半径一覧[レイヤーインデックス];
 
-					const 惑星要素 = document.createElementNS("http://www.w3.org/2000/svg", "text");
-					惑星要素.setAttribute("x", 惑星X);
-					惑星要素.setAttribute("y", 惑星Y);
-					惑星要素.textContent = 項目.記号;
-					惑星要素.setAttribute("class", "惑星記号");
+						const 惑星X = 中心X + Math.cos(角度) * 使用半径;
+						const 惑星Y = 中心Y + Math.sin(角度) * 使用半径;
 
-					円描画管理.タイトル追加(惑星要素,
-						"名前: " + 項目.名前 + "\n" +
-						"影響: " + 項目.職業または影響 + "\n" +
-						"章位置: " + 項目.章位置 + "\n" +
-						"詳細: " + (項目.詳細データ || "未入力")
-					);
+						const 惑星要素 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+						惑星要素.setAttribute("x", 惑星X);
+						惑星要素.setAttribute("y", 惑星Y);
+						惑星要素.textContent = 項目.記号;
+						惑星要素.setAttribute("class", "惑星記号");
 
-					惑星要素.addEventListener("click", () => {
-						LuminariesApplication_ViewInfo.情報表示管理.表示する(項目);
-					});
+						円描画管理.タイトル追加(惑星要素,
+							"名前: " + 項目.名前 + "\n" +
+							"影響: " + 項目.職業または影響 + "\n" +
+							"章位置: " + 項目.章位置 + "\n" +
+							"詳細: " + (項目.詳細データ || "未入力")
+						);
 
-					svg要素.appendChild(惑星要素);
+						惑星要素.addEventListener("click", () => {
+							LuminariesApplication_ViewInfo.情報表示管理.表示する(項目);
+						});
+
+						svg要素.appendChild(惑星要素);
+
+					} catch (例外) {
+						console.error("惑星描画例外: ", 例外);
+					}
 				});
+
 
 				// 地球（中央）
 				const 地球一覧 = 人物一覧.filter(x => x.種類 == "地球");
